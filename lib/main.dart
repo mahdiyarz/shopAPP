@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.cyan,
         accentColor: Colors.grey,
+        fontFamily: 'Roboto',
       ),
       initialRoute: '/',
       routes: {
