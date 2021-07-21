@@ -9,9 +9,26 @@ class ProdactItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.network(
-      imageUrl,
-      fit: BoxFit.cover,
+    return GridTile(
+      child: Image.network(
+        imageUrl,
+        fit: BoxFit.cover,
+      ),
+      footer: GridTileBar(
+        backgroundColor: Colors.black54,
+        title: Text(
+          title,
+          textAlign: TextAlign.center,
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.favorite_border),
+          onPressed: () {},
+        ),
+        trailing: IconButton(
+          onPressed: () {},
+          icon: Icon(Icons.shopping_cart),
+        ),
+      ),
     );
   }
 }

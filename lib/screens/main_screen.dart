@@ -13,13 +13,13 @@ class MainScreen extends StatelessWidget {
         title: Text('MyShop'),
       ),
       body: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           crossAxisSpacing: 5,
           mainAxisSpacing: 5,
           childAspectRatio: 2 / 3,
         ),
-        padding: EdgeInsets.all(5),
+        padding: const EdgeInsets.all(5),
         itemBuilder: (ctx, i) {
           return ProdactItem(
             DATA_EXP[i].id as String,
