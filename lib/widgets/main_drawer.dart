@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../screens/favorite_screen.dart';
 
 class MainDrawer extends StatelessWidget {
   @override
@@ -37,7 +38,9 @@ class MainDrawer extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushNamed(FavoriteScreen.routeName);
+            },
           )
         ],
       ),

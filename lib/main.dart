@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_app/screens/favorite_screen.dart';
 
 import './screens/main_screen.dart';
 import './screens/product_details_screen.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
         routes: {
           '/': (ctx) => MainScreen(),
           ProductDetailsScreen.routeName: (ctx) => ProductDetailsScreen(),
+          FavoriteScreen.routeName: (ctx) => FavoriteScreen(),
         },
       ),
     );
