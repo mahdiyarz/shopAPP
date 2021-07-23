@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../widgets/product_grid_view.dart';
+import '../widgets/main_drawer.dart';
 
 class MainScreen extends StatelessWidget {
   static const routeName = '/main-screen';
@@ -11,6 +12,7 @@ class MainScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('MyShop'),
       ),
+      drawer: MainDrawer(),
       body: ProductGridView(),
     );
   }
