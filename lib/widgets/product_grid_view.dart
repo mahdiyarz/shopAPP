@@ -18,10 +18,9 @@ class ProductGridView extends StatelessWidget {
       ),
       padding: const EdgeInsets.all(5),
       itemBuilder: (ctx, i) {
-        return ProdactItem(
-          products[i].id as String,
-          products[i].title as String,
-          products[i].imageUrl as String,
+        return ChangeNotifierProvider(
+          create: (c) => products[i],
+          child: ProdactItem(),
         );
       },
       itemCount: products.length,
