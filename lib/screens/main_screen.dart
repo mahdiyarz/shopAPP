@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/widgets/product_item.dart';
 
-import '../data_exp.dart';
+import '../widgets/product_grid_view.dart';
 
 class MainScreen extends StatelessWidget {
   static const routeName = '/main-screen';
@@ -12,23 +11,7 @@ class MainScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('MyShop'),
       ),
-      body: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 5,
-          mainAxisSpacing: 5,
-          childAspectRatio: 2 / 3,
-        ),
-        padding: const EdgeInsets.all(5),
-        itemBuilder: (ctx, i) {
-          return ProdactItem(
-            DATA_EXP[i].id as String,
-            DATA_EXP[i].title as String,
-            DATA_EXP[i].imageUrl as String,
-          );
-        },
-        itemCount: DATA_EXP.length,
-      ),
+      body: ProductGridView(),
     );
   }
 }
