@@ -9,7 +9,7 @@ class FavoriteScreen extends StatelessWidget {
         title: Text('Your Favorites'),
       ),
       body: Center(
-        child: Text('If you like anything, can see here.'),
+        child: Text('If you like anything, can see here. Start adding some...'),
       ),
     );
   }
