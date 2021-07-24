@@ -6,6 +6,10 @@ import '../widgets/main_drawer.dart';
 class MainScreen extends StatelessWidget {
   static const routeName = '/main-screen';
 
+  final Function toggleFavorite;
+  final Function isFavorite;
+  MainScreen(this.toggleFavorite, this.isFavorite);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,7 +17,7 @@ class MainScreen extends StatelessWidget {
         title: Text('MyShop'),
       ),
       drawer: MainDrawer(),
-      body: ProductGridView(),
+      body: ProductGridView(toggleFavorite, isFavorite),
     );
   }
 }

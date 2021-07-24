@@ -5,8 +5,11 @@ class ProdactItem extends StatelessWidget {
   final String id;
   final String title;
   final String imageUrl;
+  final Function toggleFavorite;
+  final Function isFavorite;
 
-  ProdactItem(this.id, this.title, this.imageUrl);
+  ProdactItem(
+      this.id, this.title, this.imageUrl, this.toggleFavorite, this.isFavorite);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +36,7 @@ class ProdactItem extends StatelessWidget {
           ),
           leading: IconButton(
             icon: Icon(Icons.favorite_border),
-            onPressed: () {},
+            onPressed: () => toggleFavorite(id),
             color: Theme.of(context).primaryColorDark,
           ),
           trailing: IconButton(
