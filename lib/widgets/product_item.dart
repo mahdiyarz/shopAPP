@@ -40,6 +40,7 @@ class ProdactItem extends StatelessWidget {
               },
               color: Theme.of(context).primaryColorDark,
             ),
+            
           ),
           trailing: IconButton(
               onPressed: () {},
