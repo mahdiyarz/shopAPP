@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../widgets/product_grid_view.dart';
 import '../widgets/badge.dart';
 import '../providers/cart.dart';
+import './cart_screen.dart';
 
 enum filterOption {
   favorite,
@@ -32,7 +33,9 @@ class _MainScreenState extends State<MainScreen> {
               value: cartData.itemCount.toString(),
             ),
             child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed(CartScreen.routeName);
+              },
               icon: Icon(Icons.shopping_cart),
             ),
           ),
