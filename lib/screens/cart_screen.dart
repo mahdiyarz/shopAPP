@@ -24,8 +24,12 @@ class CartScreen extends StatelessWidget {
                     'Total',
                     style: TextStyle(fontSize: 20),
                   ),
+                  SizedBox(
+                    width: 10,
+                  ),
                   Chip(label: Text('\$${cartData.totalAmount}')),
-                  ElevatedButton(
+                  Spacer(),
+                  TextButton(
                     onPressed: () {},
                     child: Text('PAY'),
                   ),
