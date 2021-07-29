@@ -29,7 +29,9 @@ class CartScreen extends StatelessWidget {
                   SizedBox(
                     width: 10,
                   ),
-                  Chip(label: Text('\$${cartData.totalAmount}')),
+                  Chip(
+                      label:
+                          Text('\$${cartData.totalAmount.toStringAsFixed(2)}')),
                   Spacer(),
                   TextButton(
                     onPressed: () {
