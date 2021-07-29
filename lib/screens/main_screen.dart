@@ -13,7 +13,7 @@ enum filterOption {
 }
 
 class MainScreen extends StatefulWidget {
-  static const routeName = '/main-screen';
+  static const routeName = '/';
 
   @override
   _MainScreenState createState() => _MainScreenState();
