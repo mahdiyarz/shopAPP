@@ -50,7 +50,7 @@ class ProdactItem extends StatelessWidget {
                   productData.title as String,
                   productData.price as double,
                 );
-
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text('Added item to cart!'),
