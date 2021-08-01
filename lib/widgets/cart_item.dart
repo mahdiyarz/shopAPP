@@ -40,6 +40,24 @@ class CartItem extends StatelessWidget {
         Provider.of<Cart>(context, listen: false)
             .removeItem(productId as String);
       },
+      confirmDismiss: (direction) {
+        return showDialog(
+            context: context,
+            builder: (ctx) => AlertDialog(
+                  title: Text('Deleting in progress'),
+                  content: Text('Do you wanna delete them?'),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(ctx).pop(false),
+                      child: Text('NOT at all'),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.of(ctx).pop(true),
+                      child: Text('YESSSS...'),
+                    ),
+                  ],
+                ));
+      },
       child: Card(
         margin: EdgeInsets.symmetric(
           horizontal: 15,
