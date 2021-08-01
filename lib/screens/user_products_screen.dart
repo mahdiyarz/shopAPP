@@ -26,11 +26,12 @@ class UserProductsScreen extends StatelessWidget {
           itemBuilder: (_, i) {
             return Column(
               children: [
+                Divider(),
                 UserProducts(
                   productData.items[i].title as String,
                   productData.items[i].imageUrl as String,
+                  productData.items[i].id as String,
                 ),
-                Divider(),
               ],
             );
           }),
