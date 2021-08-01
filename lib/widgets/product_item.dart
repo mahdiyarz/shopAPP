@@ -44,11 +44,19 @@ class ProdactItem extends StatelessWidget {
             ),
           ),
           trailing: IconButton(
-              onPressed: () => cartData.addItem(
-                    productData.id as String,
-                    productData.title as String,
-                    productData.price as double,
+              onPressed: () {
+                cartData.addItem(
+                  productData.id as String,
+                  productData.title as String,
+                  productData.price as double,
+                );
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Added item to cart!'),
+                    duration: Duration(seconds: 1),
                   ),
+                );
+              },
               icon: Consumer<Cart>(
                 builder: (ctx, cartData, myChild) => Icon(
                     cartData.items.containsKey(productData.id)
