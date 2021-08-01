@@ -50,10 +50,16 @@ class ProdactItem extends StatelessWidget {
                   productData.title as String,
                   productData.price as double,
                 );
+
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text('Added item to cart!'),
                     duration: Duration(seconds: 1),
+                    action: SnackBarAction(
+                        label: 'Undo',
+                        onPressed: () {
+                          cartData.removeSingleItem(productData.id as String);
+                        }),
                   ),
                 );
               },
