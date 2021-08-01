@@ -11,6 +11,7 @@ class _EditeScreenState extends State<EditeScreen> {
   final _descriptionFocusNode = FocusNode();
   final _imageUrlController = TextEditingController();
   final _imageUrlFocusNode = FocusNode();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -34,15 +35,29 @@ class _EditeScreenState extends State<EditeScreen> {
     }
   }
 
+  void _saveForm() {
+    _formKey.currentState!.save();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Edit Products'),
+        actions: [
+          ElevatedButton(
+            onPressed: () {},
+            child: Text('Save'),
+            style: ElevatedButton.styleFrom(
+              onPrimary: Colors.white,
+            ),
+          )
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
+          key: _formKey,
           child: ListView(
             children: [
               TextFormField(
