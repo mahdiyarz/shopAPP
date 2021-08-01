@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../providers/product_provider.dart';
 import '../widgets/user_products.dart';
+import '../widgets/app_drawer.dart';
 
 class UserProductsScreen extends StatelessWidget {
   static const routeName = '/user-product';
@@ -19,6 +20,7 @@ class UserProductsScreen extends StatelessWidget {
           )
         ],
       ),
+      drawer: AppDrawer(),
       body: ListView.builder(
           itemCount: productData.items.length,
           itemBuilder: (_, i) {
