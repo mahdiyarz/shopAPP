@@ -62,7 +62,10 @@ class _EditeScreenState extends State<EditeScreen> {
                 },
               ),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Description'),
+                decoration: InputDecoration(
+                  labelText: 'Description',
+                  alignLabelWithHint: true,
+                ),
                 maxLines: 5,
                 keyboardType: TextInputType.multiline,
                 focusNode: _descriptionFocusNode,
