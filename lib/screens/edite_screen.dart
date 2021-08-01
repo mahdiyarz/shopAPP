@@ -75,7 +75,6 @@ class _EditeScreenState extends State<EditeScreen> {
                     width: 100,
                     decoration: BoxDecoration(
                       border: Border.all(width: 3, color: Colors.grey),
-                      borderRadius: BorderRadius.circular(15),
                     ),
                     padding: EdgeInsets.all(5),
                     margin: EdgeInsets.only(top: 15, right: 10),
