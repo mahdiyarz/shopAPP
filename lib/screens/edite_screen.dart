@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../models/product.dart';
+
 class EditeScreen extends StatefulWidget {
   static const routeName = '/edit-screen';
   @override
@@ -12,6 +14,17 @@ class _EditeScreenState extends State<EditeScreen> {
   final _imageUrlController = TextEditingController();
   final _imageUrlFocusNode = FocusNode();
   final _formKey = GlobalKey<FormState>();
+  var _editedProduct = Product(
+    id: null,
+    title: '',
+    description: '',
+    price: 0.0,
+    imageUrl: '',
+    isShirt: false,
+    isJean: false,
+    isPan: false,
+    isScarf: false,
+  );
 
   @override
   void initState() {
