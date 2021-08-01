@@ -50,6 +50,10 @@ class _EditeScreenState extends State<EditeScreen> {
 
   void _saveForm() {
     _formKey.currentState!.save();
+    print(_editedProduct.title);
+    print(_editedProduct.description);
+    print(_editedProduct.price);
+    print(_editedProduct.imageUrl);
   }
 
   @override
@@ -59,7 +63,7 @@ class _EditeScreenState extends State<EditeScreen> {
         title: Text('Edit Products'),
         actions: [
           ElevatedButton(
-            onPressed: () {},
+            onPressed: _saveForm,
             child: Text('Save'),
             style: ElevatedButton.styleFrom(
               onPrimary: Colors.white,
@@ -79,6 +83,19 @@ class _EditeScreenState extends State<EditeScreen> {
                 onFieldSubmitted: (_) {
                   FocusScope.of(context).requestFocus(_priceFocusNode);
                 },
+                onSaved: (value) {
+                  _editedProduct = Product(
+                    id: null,
+                    title: value,
+                    description: _editedProduct.description,
+                    price: _editedProduct.price,
+                    imageUrl: _editedProduct.imageUrl,
+                    isShirt: _editedProduct.isShirt,
+                    isJean: _editedProduct.isJean,
+                    isPan: _editedProduct.isPan,
+                    isScarf: _editedProduct.isScarf,
+                  );
+                },
               ),
               TextFormField(
                 decoration: InputDecoration(labelText: 'Price'),
@@ -87,6 +104,19 @@ class _EditeScreenState extends State<EditeScreen> {
                 focusNode: _priceFocusNode,
                 onFieldSubmitted: (_) {
                   FocusScope.of(context).requestFocus(_descriptionFocusNode);
+                },
+                onSaved: (value) {
+                  _editedProduct = Product(
+                    id: null,
+                    title: _editedProduct.title,
+                    description: _editedProduct.description,
+                    price: double.parse(value as String),
+                    imageUrl: _editedProduct.imageUrl,
+                    isShirt: _editedProduct.isShirt,
+                    isJean: _editedProduct.isJean,
+                    isPan: _editedProduct.isPan,
+                    isScarf: _editedProduct.isScarf,
+                  );
                 },
               ),
               TextFormField(
@@ -97,6 +127,19 @@ class _EditeScreenState extends State<EditeScreen> {
                 maxLines: 5,
                 keyboardType: TextInputType.multiline,
                 focusNode: _descriptionFocusNode,
+                onSaved: (value) {
+                  _editedProduct = Product(
+                    id: null,
+                    title: _editedProduct.title,
+                    description: value,
+                    price: _editedProduct.price,
+                    imageUrl: _editedProduct.imageUrl,
+                    isShirt: _editedProduct.isShirt,
+                    isJean: _editedProduct.isJean,
+                    isPan: _editedProduct.isPan,
+                    isScarf: _editedProduct.isScarf,
+                  );
+                },
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -128,6 +171,19 @@ class _EditeScreenState extends State<EditeScreen> {
                       textInputAction: TextInputAction.done,
                       controller: _imageUrlController,
                       focusNode: _imageUrlFocusNode,
+                      onSaved: (value) {
+                        _editedProduct = Product(
+                          id: null,
+                          title: _editedProduct.title,
+                          description: _editedProduct.description,
+                          price: _editedProduct.price,
+                          imageUrl: value,
+                          isShirt: _editedProduct.isShirt,
+                          isJean: _editedProduct.isJean,
+                          isPan: _editedProduct.isPan,
+                          isScarf: _editedProduct.isScarf,
+                        );
+                      },
                     ),
                   ),
                 ],
