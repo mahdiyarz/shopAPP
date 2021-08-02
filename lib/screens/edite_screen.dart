@@ -149,6 +149,15 @@ class _EditeScreenState extends State<EditeScreen> {
                 maxLines: 5,
                 keyboardType: TextInputType.multiline,
                 focusNode: _descriptionFocusNode,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please provide a discription.';
+                  }
+                  if (value.length < 10) {
+                    return 'Please discribe more.';
+                  }
+                  return null;
+                },
                 onSaved: (value) {
                   _editedProduct = Product(
                     id: null,
