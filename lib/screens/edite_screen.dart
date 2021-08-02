@@ -43,8 +43,17 @@ class _EditeScreenState extends State<EditeScreen> {
   }
 
   void _updateImageUrl() {
-    if (!_imageUrlFocusNode.hasFocus) {
-      setState(() {});
+    if ((_imageUrlController.text.isEmpty) ||
+        (!_imageUrlController.text.startsWith('http') &&
+            !_imageUrlController.text.startsWith('https')) ||
+        (!_imageUrlController.text.endsWith('.png') &&
+            !_imageUrlController.text.endsWith('.jpeg') &&
+            !_imageUrlController.text.endsWith('.jpg'))) {
+      return;
+    } else {
+      if (!_imageUrlFocusNode.hasFocus) {
+        setState(() {});
+      }
     }
   }
 
@@ -216,6 +225,9 @@ class _EditeScreenState extends State<EditeScreen> {
                           return 'Please provide a image URL with image format.';
                         }
                         return null;
+                      },
+                      onFieldSubmitted: (_) {
+                        _updateImageUrl();
                       },
                       onSaved: (value) {
                         _editedProduct = Product(
