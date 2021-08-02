@@ -115,6 +115,18 @@ class _EditeScreenState extends State<EditeScreen> {
                 onFieldSubmitted: (_) {
                   FocusScope.of(context).requestFocus(_descriptionFocusNode);
                 },
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please provide your price.';
+                  }
+                  if (double.tryParse(value) == null) {
+                    return 'Please provide valid price.';
+                  }
+                  if (double.parse(value) <= 0) {
+                    return 'Please provide a price that be above ziro.';
+                  }
+                  return null;
+                },
                 onSaved: (value) {
                   _editedProduct = Product(
                     id: null,
