@@ -202,6 +202,21 @@ class _EditeScreenState extends State<EditeScreen> {
                       textInputAction: TextInputAction.done,
                       controller: _imageUrlController,
                       focusNode: _imageUrlFocusNode,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please provide image URL.';
+                        }
+                        if (!value.startsWith('http') &&
+                            !value.startsWith('https')) {
+                          return 'Please provide a valid image URL.';
+                        }
+                        if (!value.endsWith('.png') &&
+                            !value.endsWith('.jpeg') &&
+                            !value.endsWith('.jpg')) {
+                          return 'Please provide a image URL with image format.';
+                        }
+                        return null;
+                      },
                       onSaved: (value) {
                         _editedProduct = Product(
                           id: null,
