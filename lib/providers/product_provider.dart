@@ -81,4 +81,15 @@ class ProductProvider with ChangeNotifier {
     _items.add(myProduct);
     notifyListeners();
   }
+
+  void updateProduct(String productId, Product editedProduct) {
+    final productIndex =
+        _items.indexWhere((element) => element.id == productId);
+    if (productIndex >= 0) {
+      _items[productIndex] = editedProduct;
+      notifyListeners();
+    } else {
+      print('CHECK THE product_provider.dart');
+    }
+  }
 }

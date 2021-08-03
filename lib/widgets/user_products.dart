@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../screens/edite_screen.dart';
+
 class UserProducts extends StatelessWidget {
   final String title;
   final String imageUrl;
@@ -21,32 +23,47 @@ class UserProducts extends StatelessWidget {
         padding: EdgeInsets.all(5),
       ),
       direction: DismissDirection.endToStart,
+      onDismissed: (direction) {},
       child: ListTile(
         title: Text(title),
         leading: CircleAvatar(
           backgroundImage: NetworkImage(imageUrl),
         ),
         trailing: Container(
-          width: 70,
+          width: 100,
           child: Column(
             children: [
-              Row(
-                children: [
-                  Icon(Icons.keyboard_arrow_left),
-                  Text(
-                    'delete',
-                    style: TextStyle(fontSize: 15),
-                  ),
-                ],
+              Container(
+                height: 15,
+                child: Row(
+                  children: [
+                    Icon(Icons.keyboard_arrow_left),
+                    Text(
+                      'delete',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                  ],
+                ),
               ),
-              Row(
-                children: [
-                  Icon(Icons.keyboard_arrow_right),
-                  Text(
-                    'edite',
-                    style: TextStyle(fontSize: 15),
-                  ),
-                ],
+              Container(
+                height: 35,
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.keyboard_arrow_right),
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(
+                          EditeScreen.routeName,
+                          arguments: productId,
+                        );
+                      },
+                    ),
+                    Text(
+                      'edite',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
