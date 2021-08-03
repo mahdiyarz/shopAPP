@@ -1,11 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 import '../models/product.dart';
 
 class ProductProvider with ChangeNotifier {
   List<Product> _items = [
     Product(
-      id: 'p1',
+      id: 'p11111111',
       title: 'Red Shirt',
       description: 'A red shirt - it is pretty red!',
       price: 29.99,
@@ -17,7 +20,7 @@ class ProductProvider with ChangeNotifier {
       isShirt: true,
     ),
     Product(
-      id: 'p2',
+      id: 'p21111111',
       title: 'Trousers',
       description: 'A nice pair of trousers.',
       price: 59.99,
@@ -29,7 +32,7 @@ class ProductProvider with ChangeNotifier {
       isShirt: false,
     ),
     Product(
-      id: 'p3',
+      id: 'p311111',
       title: 'Yellow Scarf',
       description: 'Warm and cozy - exactly what you need for the winter.',
       price: 19.99,
@@ -40,7 +43,7 @@ class ProductProvider with ChangeNotifier {
       isShirt: false,
     ),
     Product(
-      id: 'p4',
+      id: 'p4111111',
       title: 'A Pan',
       description: 'Prepare any meal you want.',
       price: 49.99,
@@ -68,6 +71,23 @@ class ProductProvider with ChangeNotifier {
   }
 
   void addProduct(Product newProduct) {
+    final url = Uri.https(
+        'my-shop-app-5ef04-default-rtdb.asia-southeast1.firebasedatabase.app',
+        '/products.json');
+    http.post(
+      url,
+      body: json.encode({
+        'title': newProduct.title,
+        'price': newProduct.price.toString(),
+        'description': newProduct.description,
+        'imageUrl': newProduct.imageUrl,
+        'isFavorite': newProduct.isFavorate,
+        'isJean': newProduct.isJean,
+        'isPan': newProduct.isPan,
+        'isScarf': newProduct.isScarf,
+        'isShirt': newProduct.isShirt,
+      }),
+    );
     final myProduct = Product(
         id: DateTime.now().toString(),
         title: newProduct.title,

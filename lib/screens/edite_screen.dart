@@ -17,7 +17,7 @@ class _EditeScreenState extends State<EditeScreen> {
   final _imageUrlFocusNode = FocusNode();
   final _formKey = GlobalKey<FormState>();
   var _editedProduct = Product(
-    id: null,
+    id: 'm',
     title: '',
     description: '',
     price: 0.0,
@@ -45,7 +45,7 @@ class _EditeScreenState extends State<EditeScreen> {
   void didChangeDependencies() {
     if (_isInit) {
       final productId = ModalRoute.of(context)!.settings.arguments as String;
-      if (productId != null) {
+      if (productId.length > 2) {
         _editedProduct = Provider.of<ProductProvider>(context, listen: false)
             .findById(productId);
         _initValues = {
@@ -93,7 +93,7 @@ class _EditeScreenState extends State<EditeScreen> {
       return;
     }
     _formKey.currentState!.save();
-    if (_editedProduct.id != null) {
+    if (_editedProduct.id!.length > 2) {
       Provider.of<ProductProvider>(context, listen: false)
           .updateProduct(_editedProduct.id as String, _editedProduct);
     } else {
