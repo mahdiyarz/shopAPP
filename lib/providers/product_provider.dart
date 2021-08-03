@@ -74,7 +74,8 @@ class ProductProvider with ChangeNotifier {
     final url = Uri.https(
         'my-shop-app-5ef04-default-rtdb.asia-southeast1.firebasedatabase.app',
         '/products.json');
-    http.post(
+    http
+        .post(
       url,
       body: json.encode({
         'title': newProduct.title,
@@ -87,19 +88,22 @@ class ProductProvider with ChangeNotifier {
         'isScarf': newProduct.isScarf,
         'isShirt': newProduct.isShirt,
       }),
-    );
-    final myProduct = Product(
-        id: DateTime.now().toString(),
-        title: newProduct.title,
-        description: newProduct.description,
-        price: newProduct.price,
-        imageUrl: newProduct.imageUrl,
-        isShirt: false,
-        isJean: false,
-        isPan: false,
-        isScarf: false);
-    _items.add(myProduct);
-    notifyListeners();
+    )
+        .then((response) {
+      print(json.decode(response.body));
+      final myProduct = Product(
+          id: json.decode(response.body)['name'],
+          title: newProduct.title,
+          description: newProduct.description,
+          price: newProduct.price,
+          imageUrl: newProduct.imageUrl,
+          isShirt: false,
+          isJean: false,
+          isPan: false,
+          isScarf: false);
+      _items.add(myProduct);
+      notifyListeners();
+    });
   }
 
   void updateProduct(String productId, Product editedProduct) {
