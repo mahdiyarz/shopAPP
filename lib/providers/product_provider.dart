@@ -92,4 +92,9 @@ class ProductProvider with ChangeNotifier {
       print('CHECK THE product_provider.dart');
     }
   }
+
+  void deleteProduct(String productId) {
+    _items.removeWhere((element) => element.id == productId);
+    notifyListeners();
+  }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../screens/edite_screen.dart';
+import '../providers/product_provider.dart';
 
 class UserProducts extends StatelessWidget {
   final String title;
@@ -23,7 +25,10 @@ class UserProducts extends StatelessWidget {
         padding: EdgeInsets.all(5),
       ),
       direction: DismissDirection.endToStart,
-      onDismissed: (direction) {},
+      onDismissed: (direction) {
+        Provider.of<ProductProvider>(context, listen: false)
+            .deleteProduct(productId);
+      },
       child: ListTile(
         title: Text(title),
         leading: CircleAvatar(
