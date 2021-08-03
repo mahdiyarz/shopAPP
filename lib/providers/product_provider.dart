@@ -103,6 +103,9 @@ class ProductProvider with ChangeNotifier {
           isScarf: false);
       _items.add(myProduct);
       notifyListeners();
+    }).catchError((error) {
+      print(error);
+      throw error;
     });
   }
 
