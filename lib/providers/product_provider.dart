@@ -70,11 +70,11 @@ class ProductProvider with ChangeNotifier {
     );
   }
 
-  void addProduct(Product newProduct) {
+  Future<void> addProduct(Product newProduct) {
     final url = Uri.https(
         'my-shop-app-5ef04-default-rtdb.asia-southeast1.firebasedatabase.app',
         '/products.json');
-    http
+    return http
         .post(
       url,
       body: json.encode({
