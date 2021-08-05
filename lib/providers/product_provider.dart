@@ -70,6 +70,18 @@ class ProductProvider with ChangeNotifier {
     );
   }
 
+  Future<void> fetchProducts() async {
+    final url = Uri.https(
+        'my-shop-app-5ef04-default-rtdb.asia-southeast1.firebasedatabase.app',
+        '/products.json');
+    try {
+      final response = await http.get(url);
+      print(response);
+    } catch (error) {
+      throw error;
+    }
+  }
+
   Future<void> addProduct(Product newProduct) {
     final url = Uri.https(
         'my-shop-app-5ef04-default-rtdb.asia-southeast1.firebasedatabase.app',
