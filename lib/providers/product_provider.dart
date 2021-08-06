@@ -140,10 +140,20 @@ class ProductProvider with ChangeNotifier {
     });
   }
 
-  void updateProduct(String productId, Product editedProduct) {
+  Future<void> updateProduct(String productId, Product editedProduct) async {
     final productIndex =
         _items.indexWhere((element) => element.id == productId);
     if (productIndex >= 0) {
+      final url = Uri.https(
+          'my-shop-app-5ef04-default-rtdb.asia-southeast1.firebasedatabase.app',
+          '/products/$productId.json');
+      await http.patch(url,
+          body: json.encode({
+            'title': editedProduct.title,
+            'price': editedProduct.price,
+            'imageUrl': editedProduct.imageUrl,
+            'description': editedProduct.description,
+          }));
       _items[productIndex] = editedProduct;
       notifyListeners();
     } else {
