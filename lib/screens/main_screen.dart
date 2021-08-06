@@ -23,12 +23,21 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   var _isFavorited = false;
   var _isInit = true;
+  var _isLoading = false;
 
   @override
   void didChangeDependencies() {
     if (_isInit) {
-      Provider.of<ProductProvider>(context).fetchProducts();
+      setState(() {
+        _isLoading = true;
+      });
+      Provider.of<ProductProvider>(context).fetchProducts().then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
     }
+
     _isInit = false;
     super.didChangeDependencies();
   }
@@ -76,7 +85,11 @@ class _MainScreenState extends State<MainScreen> {
         ],
       ),
       drawer: AppDrawer(),
-      body: ProductGridView(_isFavorited),
+      body: _isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : ProductGridView(_isFavorited),
     );
   }
 }
