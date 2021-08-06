@@ -88,7 +88,7 @@ class _EditeScreenState extends State<EditeScreen> {
     }
   }
 
-  void _saveForm() {
+  Future<void> _saveForm() async {
     setState(() {
       _isLoading = true;
     });
@@ -98,14 +98,16 @@ class _EditeScreenState extends State<EditeScreen> {
     }
     _formKey.currentState!.save();
     if (_editedProduct.id!.length > 2) {
-      Provider.of<ProductProvider>(context, listen: false)
+      await Provider.of<ProductProvider>(context, listen: false)
           .updateProduct(_editedProduct.id as String, _editedProduct);
-      Navigator.of(context).pop();
+
+      // Navigator.of(context).pop();
     } else {
-      Provider.of<ProductProvider>(context, listen: false)
-          .addProduct(_editedProduct)
-          .catchError((error) {
-        return showDialog<Null>(
+      try {
+        await Provider.of<ProductProvider>(context, listen: false)
+            .addProduct(_editedProduct);
+      } catch (error) {
+        showDialog<Null>(
           context: context,
           builder: (ctx) => AlertDialog(
             title: Text('ERROR!'),
@@ -120,13 +122,12 @@ class _EditeScreenState extends State<EditeScreen> {
             ],
           ),
         );
-      }).then((_) {
-        setState(() {
-          _isLoading = false;
-        });
-        Navigator.of(context).pop();
-      });
+      }
     }
+    setState(() {
+      _isLoading = false;
+    });
+    Navigator.of(context).pop();
   }
 
   @override
