@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/product.dart';
+import '../models/http_exception.dart';
 
 class ProductProvider with ChangeNotifier {
   List<Product> _items = [
@@ -161,8 +162,24 @@ class ProductProvider with ChangeNotifier {
     }
   }
 
-  void deleteProduct(String productId) {
-    _items.removeWhere((element) => element.id == productId);
+  Future<void> deleteProduct(String productId) async {
+    final url = Uri.https(
+        'my-shop-app-5ef04-default-rtdb.asia-southeast1.firebasedatabase.app',
+        '/products/$productId.json');
+    final existingProIndex =
+        _items.indexWhere((element) => element.id == productId);
+    Product? existingProduct = _items[existingProIndex];
+    _items.removeAt(existingProIndex);
+    final response = await http.delete(url);
+    print(response.statusCode);
+    if (response.statusCode >= 400) {
+      _items.insert(existingProIndex, existingProduct);
+
+      notifyListeners();
+      throw HttpException('Delete not compelete!');
+    }
+    existingProduct = null;
+
     notifyListeners();
   }
 }
