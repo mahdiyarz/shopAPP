@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
@@ -24,6 +25,36 @@ class Order with ChangeNotifier {
 
   List<OrderItem> get orders {
     return [..._orders];
+  }
+
+  Future<void> fetchOrders() async {
+    final url = Uri.https(
+        'my-shop-app-5ef04-default-rtdb.asia-southeast1.firebasedatabase.app',
+        '/orders.json');
+    final response = await http.get(url);
+    final List<OrderItem> loadedOrders = [];
+    final Map<String, dynamic>? extractedOrders = json.decode(response.body);
+
+    if (extractedOrders == null) {
+      return;
+    }
+    extractedOrders.forEach((orderId, orderData) {
+      loadedOrders.add(OrderItem(
+        id: orderId,
+        amount: orderData['amount'],
+        products: (orderData['products'] as List<dynamic>)
+            .map((e) => CartItem(
+                  id: e['id'],
+                  title: e['title'],
+                  quantity: e['quantity'],
+                  price: e['price'],
+                ))
+            .toList(),
+        dateTime: DateTime.parse(orderData['dateTime']),
+      ));
+    });
+    _orders = loadedOrders.reversed.toList();
+    notifyListeners();
   }
 
   Future<void> addOrders(List<CartItem> cartProduct, double total) async {
