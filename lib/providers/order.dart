@@ -31,7 +31,7 @@ class Order with ChangeNotifier {
         'my-shop-app-5ef04-default-rtdb.asia-southeast1.firebasedatabase.app',
         '/orders.json');
     final dateTamp = DateTime.now();
-    await http.post(url,
+    final response = await http.post(url,
         body: json.encode({
           'amount': total,
           'dateTime': dateTamp.toIso8601String(),
@@ -47,7 +47,7 @@ class Order with ChangeNotifier {
     _orders.insert(
         0,
         OrderItem(
-          id: DateTime.now().toString(),
+          id: json.decode(response.body)['name'],
           amount: total,
           products: cartProduct,
           dateTime: dateTamp,
