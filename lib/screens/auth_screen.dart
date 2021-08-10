@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 
+import '../widgets/auth.dart';
+
 class AuthScreen extends StatelessWidget {
   static const routeName = '/auth-screen';
 
@@ -60,7 +62,7 @@ class AuthScreen extends StatelessWidget {
                   ),
                   Flexible(
                     flex: deviceSize.width > 600 ? 2 : 1,
-                    child: Container(),
+                    child: AuthCard(),
                   )
                 ],
               ),
