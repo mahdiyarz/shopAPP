@@ -18,5 +18,6 @@ class Auth with ChangeNotifier {
           'password': password,
           'returnSecureToken': true,
         }));
+    print(json.decode(response.body));
   }
 }
