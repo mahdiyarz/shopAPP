@@ -10,6 +10,19 @@ class Auth with ChangeNotifier {
   DateTime? _expiryDate;
   String? _userId;
 
+  bool get isAuth {
+    return myToken != null;
+  }
+
+  String? get myToken {
+    if (_expiryDate != null &&
+        _token != null &&
+        _expiryDate!.isAfter(DateTime.now())) {
+      return _token;
+    }
+    return null;
+  }
+
   Future<void> _authenticate(
       String email, String password, String urlSegment) async {
     final url = Uri.parse(
@@ -25,6 +38,14 @@ class Auth with ChangeNotifier {
       if (responsData['error'] != null) {
         throw HttpException(responsData['error']['message']);
       }
+      _token = responsData['idToken'];
+      _userId = responsData['localId'];
+      _expiryDate = DateTime.now().add(
+        Duration(
+          seconds: int.parse(responsData['expiresIn']),
+        ),
+      );
+      notifyListeners();
     } catch (error) {
       throw error;
     }
