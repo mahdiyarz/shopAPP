@@ -77,11 +77,13 @@ class ProductProvider with ChangeNotifier {
     );
   }
 
-  Future<void> fetchProducts() async {
+  Future<void> fetchProducts([bool filterByUser = false]) async {
     var url = Uri.https(
         'my-shop-app-5ef04-default-rtdb.asia-southeast1.firebasedatabase.app',
         '/products.json', {
       'auth': authToken,
+      if (filterByUser) 'orderBy': '"creatorId"',
+      if (filterByUser) 'equalTo': '"$userId"',
     });
     try {
       // print(url);
@@ -98,7 +100,7 @@ class ProductProvider with ChangeNotifier {
         'auth': authToken,
       });
       final favResponse = await http.get(favUrl);
-      print(json.decode(favResponse.body));
+      // print(json.decode(favResponse.body));
       final favData = json.decode(favResponse.body);
       final List<Product> loadedProduct = [];
       extractedData.forEach((proId, proData) {
@@ -141,6 +143,7 @@ class ProductProvider with ChangeNotifier {
         'isPan': newProduct.isPan,
         'isScarf': newProduct.isScarf,
         'isShirt': newProduct.isShirt,
+        'creatorId': userId,
       }),
     )
         .then((response) {

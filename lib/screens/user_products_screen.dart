@@ -10,12 +10,13 @@ class UserProductsScreen extends StatelessWidget {
   static const routeName = '/user-product';
 
   Future<void> _refreshProducts(BuildContext context) async {
-    await Provider.of<ProductProvider>(context, listen: false).fetchProducts();
+    await Provider.of<ProductProvider>(context, listen: false)
+        .fetchProducts(true);
   }
 
   @override
   Widget build(BuildContext context) {
-    final productData = Provider.of<ProductProvider>(context);
+    // final productData = Provider.of<ProductProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('User Products'),
@@ -32,22 +33,32 @@ class UserProductsScreen extends StatelessWidget {
         ],
       ),
       drawer: AppDrawer(),
-      body: RefreshIndicator(
-        onRefresh: () => _refreshProducts(context),
-        child: ListView.builder(
-            itemCount: productData.items.length,
-            itemBuilder: (_, i) {
-              return Column(
-                children: [
-                  Divider(),
-                  UserProducts(
-                    productData.items[i].title as String,
-                    productData.items[i].imageUrl as String,
-                    productData.items[i].id as String,
+      body: FutureBuilder(
+        future: _refreshProducts(context),
+        builder: (ctx, snapshot) =>
+            snapshot.connectionState == ConnectionState.waiting
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : RefreshIndicator(
+                    onRefresh: () => _refreshProducts(context),
+                    child: Consumer<ProductProvider>(
+                      builder: (ctx, productData, _) => ListView.builder(
+                          itemCount: productData.items.length,
+                          itemBuilder: (_, i) {
+                            return Column(
+                              children: [
+                                Divider(),
+                                UserProducts(
+                                  productData.items[i].title as String,
+                                  productData.items[i].imageUrl as String,
+                                  productData.items[i].id as String,
+                                ),
+                              ],
+                            );
+                          }),
+                    ),
                   ),
-                ],
-              );
-            }),
       ),
     );
   }
