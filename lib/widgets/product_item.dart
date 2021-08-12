@@ -40,7 +40,8 @@ class ProdactItem extends StatelessWidget {
                   ? Icons.favorite
                   : Icons.favorite_border),
               onPressed: () {
-                productData.toggleFavoriteStatus(authData.myToken as String);
+                productData.toggleFavoriteStatus(
+                    authData.myToken as String, authData.myId);
               },
               color: Theme.of(context).primaryColorDark,
             ),

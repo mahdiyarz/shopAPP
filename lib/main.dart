@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
           update: (ctx, authData, previuosProduct) => ProductProvider(
             previuosProduct == null ? [] : previuosProduct.items,
             authData.myToken as String,
+            authData.myId,
           ),
         ),
         ChangeNotifierProvider(

@@ -59,8 +59,9 @@ class ProductProvider with ChangeNotifier {
   // ];
 
   String? authToken;
+  String? userId;
 
-  ProductProvider(this._items, [this.authToken]);
+  ProductProvider(this._items, [this.authToken, this.userId]);
 
   List<Product> get items {
     return [..._items];
@@ -85,12 +86,20 @@ class ProductProvider with ChangeNotifier {
     try {
       // print(url);
       final response = await http.get(url);
-      print(json.decode(response.body));
+      // print(json.decode(response.body));
       final Map<String, dynamic>? extractedData = json.decode(response.body);
 
       if (extractedData == null) {
         return;
       }
+      var favUrl = Uri.https(
+          'my-shop-app-5ef04-default-rtdb.asia-southeast1.firebasedatabase.app',
+          '/favProducts/$userId.json', {
+        'auth': authToken,
+      });
+      final favResponse = await http.get(favUrl);
+      print(json.decode(favResponse.body));
+      final favData = json.decode(favResponse.body);
       final List<Product> loadedProduct = [];
       extractedData.forEach((proId, proData) {
         loadedProduct.add(
@@ -104,7 +113,7 @@ class ProductProvider with ChangeNotifier {
               isJean: proData['isJean'],
               isPan: proData['isPan'],
               isScarf: proData['isScarf'],
-              isFavorate: proData['isFavorite']),
+              isFavorate: favData == null ? false : favData[proId] ?? false),
         );
       });
       _items = loadedProduct;
@@ -128,7 +137,6 @@ class ProductProvider with ChangeNotifier {
         'price': newProduct.price,
         'description': newProduct.description,
         'imageUrl': newProduct.imageUrl,
-        'isFavorite': newProduct.isFavorate,
         'isJean': newProduct.isJean,
         'isPan': newProduct.isPan,
         'isScarf': newProduct.isScarf,
