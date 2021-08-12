@@ -79,7 +79,8 @@ class _AuthCardState extends State<AuthCard> {
       }
       _showDialogError(errorMessage);
     } catch (error) {
-      var errorMessage = 'Could not authenticate you. Please try againe later.';
+      var errorMessage =
+          'Could not connect to the server. Please check your internet connection.';
       _showDialogError(errorMessage);
     }
     setState(() {
@@ -118,6 +119,7 @@ class _AuthCardState extends State<AuthCard> {
               children: [
                 TextFormField(
                   decoration: InputDecoration(labelText: 'e-Mail'),
+                  autocorrect: false,
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
                     if (value!.isEmpty ||

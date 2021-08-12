@@ -7,55 +7,60 @@ import '../models/product.dart';
 import '../models/http_exception.dart';
 
 class ProductProvider with ChangeNotifier {
-  List<Product> _items = [
-    // Product(
-    //   id: 'p11111111',
-    //   title: 'Red Shirt',
-    //   description: 'A red shirt - it is pretty red!',
-    //   price: 29.99,
-    //   imageUrl:
-    //       'https://rukminim1.flixcart.com/image/714/857/juh9ksw0/shirt/g/f/j/xl-red-casual-shirt-qlonz-store-original-imaffhcbrb4kgsuv.jpeg?q=50',
-    //   isJean: false,
-    //   isPan: false,
-    //   isScarf: false,
-    //   isShirt: true,
-    // ),
-    // Product(
-    //   id: 'p21111111',
-    //   title: 'Trousers',
-    //   description: 'A nice pair of trousers.',
-    //   price: 59.99,
-    //   imageUrl:
-    //       'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Trousers%2C_dress_%28AM_1960.022-8%29.jpg/512px-Trousers%2C_dress_%28AM_1960.022-8%29.jpg',
-    //   isJean: true,
-    //   isPan: false,
-    //   isScarf: false,
-    //   isShirt: false,
-    // ),
-    // Product(
-    //   id: 'p311111',
-    //   title: 'Yellow Scarf',
-    //   description: 'Warm and cozy - exactly what you need for the winter.',
-    //   price: 19.99,
-    //   imageUrl: 'https://m.media-amazon.com/images/I/417Kbn0NO8L.jpg',
-    //   isJean: false,
-    //   isPan: false,
-    //   isScarf: true,
-    //   isShirt: false,
-    // ),
-    // Product(
-    //   id: 'p4111111',
-    //   title: 'A Pan',
-    //   description: 'Prepare any meal you want.',
-    //   price: 49.99,
-    //   imageUrl:
-    //       'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cast-Iron-Pan.jpg/1024px-Cast-Iron-Pan.jpg',
-    //   isJean: false,
-    //   isPan: true,
-    //   isScarf: false,
-    //   isShirt: false,
-    // ),
-  ];
+  List<Product> _items = [];
+  //  = [
+  // Product(
+  //   id: 'p11111111',
+  //   title: 'Red Shirt',
+  //   description: 'A red shirt - it is pretty red!',
+  //   price: 29.99,
+  //   imageUrl:
+  //       'https://rukminim1.flixcart.com/image/714/857/juh9ksw0/shirt/g/f/j/xl-red-casual-shirt-qlonz-store-original-imaffhcbrb4kgsuv.jpeg?q=50',
+  //   isJean: false,
+  //   isPan: false,
+  //   isScarf: false,
+  //   isShirt: true,
+  // ),
+  // Product(
+  //   id: 'p21111111',
+  //   title: 'Trousers',
+  //   description: 'A nice pair of trousers.',
+  //   price: 59.99,
+  //   imageUrl:
+  //       'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Trousers%2C_dress_%28AM_1960.022-8%29.jpg/512px-Trousers%2C_dress_%28AM_1960.022-8%29.jpg',
+  //   isJean: true,
+  //   isPan: false,
+  //   isScarf: false,
+  //   isShirt: false,
+  // ),
+  // Product(
+  //   id: 'p311111',
+  //   title: 'Yellow Scarf',
+  //   description: 'Warm and cozy - exactly what you need for the winter.',
+  //   price: 19.99,
+  //   imageUrl: 'https://m.media-amazon.com/images/I/417Kbn0NO8L.jpg',
+  //   isJean: false,
+  //   isPan: false,
+  //   isScarf: true,
+  //   isShirt: false,
+  // ),
+  // Product(
+  //   id: 'p4111111',
+  //   title: 'A Pan',
+  //   description: 'Prepare any meal you want.',
+  //   price: 49.99,
+  //   imageUrl:
+  //       'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cast-Iron-Pan.jpg/1024px-Cast-Iron-Pan.jpg',
+  //   isJean: false,
+  //   isPan: true,
+  //   isScarf: false,
+  //   isShirt: false,
+  // ),
+  // ];
+
+  String? authToken;
+
+  ProductProvider(this._items, [this.authToken]);
 
   List<Product> get items {
     return [..._items];
@@ -72,11 +77,15 @@ class ProductProvider with ChangeNotifier {
   }
 
   Future<void> fetchProducts() async {
-    final url = Uri.https(
+    var url = Uri.https(
         'my-shop-app-5ef04-default-rtdb.asia-southeast1.firebasedatabase.app',
-        '/products.json');
+        '/products.json', {
+      'auth': authToken,
+    });
     try {
+      // print(url);
       final response = await http.get(url);
+      print(json.decode(response.body));
       final Map<String, dynamic>? extractedData = json.decode(response.body);
 
       if (extractedData == null) {
@@ -100,16 +109,17 @@ class ProductProvider with ChangeNotifier {
       });
       _items = loadedProduct;
       notifyListeners();
-      // print(json.decode(response.body));
     } catch (error) {
-      throw error;
+      throw 'Permition denied from your server. Please check your url path of authentication!';
     }
   }
 
   Future<void> addProduct(Product newProduct) {
     final url = Uri.https(
         'my-shop-app-5ef04-default-rtdb.asia-southeast1.firebasedatabase.app',
-        '/products.json');
+        '/products.json', {
+      'auth': authToken,
+    });
     return http
         .post(
       url,
@@ -151,7 +161,9 @@ class ProductProvider with ChangeNotifier {
     if (productIndex >= 0) {
       final url = Uri.https(
           'my-shop-app-5ef04-default-rtdb.asia-southeast1.firebasedatabase.app',
-          '/products/$productId.json');
+          '/products/$productId.json', {
+        'auth': authToken,
+      });
       await http.patch(url,
           body: json.encode({
             'title': editedProduct.title,
@@ -169,7 +181,9 @@ class ProductProvider with ChangeNotifier {
   Future<void> deleteProduct(String productId) async {
     final url = Uri.https(
         'my-shop-app-5ef04-default-rtdb.asia-southeast1.firebasedatabase.app',
-        '/products/$productId.json');
+        '/products/$productId.json', {
+      'auth': authToken,
+    });
     final existingProIndex =
         _items.indexWhere((element) => element.id == productId);
     Product? existingProduct = _items[existingProIndex];
