@@ -58,10 +58,10 @@ class ProductProvider with ChangeNotifier {
   // ),
   // ];
 
-  String? authToken;
-  String? userId;
+  String authToken;
+  String userId;
 
-  ProductProvider(this._items, [this.authToken, this.userId]);
+  ProductProvider(this._items, this.authToken, this.userId);
 
   List<Product> get items {
     return [..._items];
