@@ -12,6 +12,7 @@ import './screens/user_products_screen.dart';
 import './screens/edite_screen.dart';
 import './screens/auth_screen.dart';
 import './providers/auth_provider.dart';
+import './screens/waiting_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -54,14 +55,23 @@ class MyApp extends StatelessWidget {
             accentColor: Colors.grey,
             fontFamily: 'Roboto',
           ),
-          initialRoute: '/',
+          home: authData.isAuth
+              ? MainScreen()
+              : FutureBuilder(
+                  future: authData.tryToLogin(),
+                  builder: (ctx, authResultSnapshot) =>
+                      authResultSnapshot.connectionState ==
+                              ConnectionState.waiting
+                          ? WaitingScreen()
+                          : AuthScreen(),
+                ),
           routes: {
-            '/': (ctx) => authData.isAuth ? MainScreen() : AuthScreen(),
             ProductDetailsScreen.routeName: (ctx) => ProductDetailsScreen(),
             CartScreen.routeName: (ctx) => CartScreen(),
             OrdersScreen.routeName: (ctx) => OrdersScreen(),
             UserProductsScreen.routeName: (ctx) => UserProductsScreen(),
             EditeScreen.routeName: (ctx) => EditeScreen(),
+            WaitingScreen.routeName: (ctx) => WaitingScreen(),
           },
         ),
       ),
