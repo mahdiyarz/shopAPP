@@ -23,10 +23,13 @@ class ProdactItem extends StatelessWidget {
               arguments: productData.id,
             );
           },
-          child: FadeInImage(
-            placeholder: AssetImage('assets/images/product-placeholder.png'),
-            image: NetworkImage(productData.imageUrl as String),
-            fit: BoxFit.cover,
+          child: Hero(
+            tag: productData.id as String,
+            child: FadeInImage(
+              placeholder: AssetImage('assets/images/product-placeholder.png'),
+              image: NetworkImage(productData.imageUrl as String),
+              fit: BoxFit.cover,
+            ),
           ),
         ),
         footer: GridTileBar(
