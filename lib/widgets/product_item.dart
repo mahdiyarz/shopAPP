@@ -23,8 +23,9 @@ class ProdactItem extends StatelessWidget {
               arguments: productData.id,
             );
           },
-          child: Image.network(
-            productData.imageUrl as String,
+          child: FadeInImage(
+            placeholder: AssetImage('assets/images/product-placeholder.png'),
+            image: NetworkImage(productData.imageUrl as String),
             fit: BoxFit.cover,
           ),
         ),
