@@ -34,22 +34,26 @@ class _OrderItemState extends State<OrderItem> {
               },
             ),
           ),
-          if (_expand)
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              height: min(widget.ordersData.products!.length * 20.0 + 5, 100),
-              child: ListView(
-                children: widget.ordersData.products!.map((e) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(e.title as String),
-                      Text('${e.quantity}x ${e.price}')
-                    ],
-                  );
-                }).toList(),
-              ),
+          // if (_expand)
+          AnimatedContainer(
+            curve: Curves.easeIn,
+            duration: Duration(milliseconds: 300),
+            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            height: _expand
+                ? min(widget.ordersData.products!.length * 20.0 + 5, 100)
+                : 0,
+            child: ListView(
+              children: widget.ordersData.products!.map((e) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(e.title as String),
+                    Text('${e.quantity}x ${e.price}')
+                  ],
+                );
+              }).toList(),
             ),
+          ),
         ],
       ),
     );
