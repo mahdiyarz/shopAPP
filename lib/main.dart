@@ -41,10 +41,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProxyProvider<Auth, Order>(
           create: (ctx) => Order([], '', ''),
           update: (ctx, authData, previuosOrders) => Order(
-            previuosOrders == null ? [] : previuosOrders.orders,
-            authData.myId,
-            authData.myToken as String,
-          ),
+              previuosOrders == null ? [] : previuosOrders.orders,
+              authData.myId,
+              // fix a bug about null safety
+              authData.myToken == null ? '' : authData.myToken as String),
         ),
       ],
       child: Consumer<Auth>(
